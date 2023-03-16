@@ -1,0 +1,323 @@
+{% extends 'AdminFolder/base.html' %}
+{% load static %}
+
+{% block content %}
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a href="index.html" class="app-brand-link ">
+            <span class="app-brand-logo demo  ">
+              <img src="{% static 'admin/assets/img/logo/a.jpeg' %}" alt="">
+            </span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2"><strong>C &amp; 3G</strong></span>
+         
+          </a>
+
+          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+          </a>
+        </div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item ">
+              <a href="{% url 'dashboard' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+              </a>
+            </li>
+  
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-detail"></i>
+                <div data-i18n="Form Elements">Rice Items</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="#" class="menu-link">
+                    <div data-i18n="Basic Inputs">Add Rice Item</div>
+                  </a>
+                </li>
+                <li class="menu-item ">
+                  <a href="{% url 'ricelist' %}" class="menu-link">
+                    <div data-i18n="Input groups">Rice List</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+  
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Customer Status</span>
+            </li>
+  
+            <li class="menu-item">
+              <a href="{% url 'orders' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">List of orders</div>
+              </a>
+            </li>
+  
+            <li class="menu-item active">
+              <a href="{% url 'customerLendingStatus' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Lending Status</div>
+              </a>
+            </li>
+  
+            <!-- Forms & Tables -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Shipping and Policies</span></li>
+            <!-- Forms -->
+  
+            <li class="menu-item">
+              <a href="{% url 'Shipping' %}" class="menu-link">
+                <i class='menu-icon tf-iconds bx bxs-package'></i>
+                <div data-i18n="Basic">Shipping</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="{% url 'Policy' %}" class="menu-link">
+                <i class='menu-icon tf-icon bx bx-notepad'></i>
+                <div data-i18n="Basic">Lending Policies</div>
+              </a>
+            </li>
+          </ul>
+      </aside>
+      <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+    
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="{% static 'admin/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="{% static 'admin/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block">Cherry Andalis</span>
+                            <small class="text-muted">Admin</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    
+                    <li>
+                      <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+            
+              <!-- Striped Rows -->
+              <div class="card">
+                <div class="d-flex justify-content-between">
+                  <div class="p-2">
+                    <h5 class="card-header">CUSTOMER LENDING STATUS</h5>
+                  </div>
+                  
+                  <div class="ml-auto p-4 ">
+                    <div class="dropdown dropstart text-end">
+                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class='bx bx-menu bx-md'></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">	&laquo Filter By</a>
+                          <ul class="dropdown-menu dropdown-submenu">
+                            <li><a href="{% url 'Paid' %}" class="dropdown-item">Fully Paid</a></li>
+                            <li><a href="{% url 'Partially_Paid' %}" class="dropdown-item">Partially Paid</a></li>
+                            <li><a href="{% url 'Unpaid' %}" class="dropdown-item">Unpaid</a></li>
+                            <li><a href="{% url 'customerLendingStatus' %}" class="dropdown-item">All Customers</a></li>
+                          </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="#">	&laquo Sort By</a>
+                          <ul class="dropdown-menu dropdown-submenu">
+                              <li><a href="{% url 'Alphabetical_Order' %}" class="dropdown-item">Alphabetical Order</a></li>
+                              <!-- <li><a href="#" class="dropdown-item">sub 2</a></li>
+                              <li><a href="#" class="dropdown-item">sub 3</a></li> -->
+                          </ul>
+                      </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-striped">
+                    <thead>
+
+                      <tr>
+                        <th>Customer Name</th>
+                        <th>Total Payment</th>
+                        <th>Due Date</th>
+                        <th>Total Amount Paid</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                       
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      {% for details in lendingDeets %}
+                      <tr>
+                        <td><a href="/LendingDetail/{{details.id}}">{{details.customer.name}}</a></td>
+                        <td>{{details.total_payment}}</td>
+                        <td>
+                          {% if details.due_date == None %}
+                          <p>-</p>
+                          {% else %}
+                          {{details.due_date}}
+                          {% endif %}
+                        
+                        </td>
+                        <td>{{details.total_amount_paid}}</td>
+                        <td>{{details.balance}}</td>
+                        <td>{{details.status}}</td>
+                        <!-- <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+
+                            {% if details.status == 'Fully paid'%}
+
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="bx bx-trash me-1"></i> Delete</a
+                                >
+                              </div>
+                            {% else %}
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/updateStat/{{details.id}}"
+                                  ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                >
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="bx bx-trash me-1"></i> Delete</a
+                                >
+                              </div>
+                            {% endif %}
+                          </div>
+                        </td> -->
+                      </tr>
+						           {% endfor %} 
+                       
+                       <tr>
+                        <td colspan="7" class="align-items-center text-center">
+                          {% if request.path == '/Paid/' %}
+                            {% if lending.count == 0 %}
+
+                            {% else %}
+                            <a href="{% url 'export_paid' %}" class="btn btn-primary">Download Paid Loans</a>
+                            {% endif %}
+                            
+                          {% elif request.path == '/Unpaid/' %}
+                            {% if lending.count == 0 %}
+
+                            {% else %}
+                            <a href="{% url 'export_unpaid' %}" class="btn btn-primary">Download Unpaid Loans</a>
+                            {% endif %}
+
+                          {% elif request.path == '/Partially_Paid/'  %}
+                            {% if lending.count == 0 %}
+
+                            {% else %}
+                            <a href="{% url 'export_partially_paid' %}" class="btn btn-primary">Download Partially Paid Loans</a>
+                            {% endif %}
+                          {% elif request.path == '/Alphabetical_Order/'  %}
+                            {% if lending.count == 0 %}
+
+                            {% else %}
+                            <a href="{% url 'export_alpha' %}" class="btn btn-primary">Download Loan Status Alphabetically</a>
+                            {% endif %}
+                          {% elif request.path == '/customerLendingStatus/'  %}
+                          <a href="#" class="btn btn-primary">Download List of Loans</a>
+                          {% endif %}
+                        </td>
+                       </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="text-center text-muted mt-3">
+                {% if lendingDeets.has_previous %}
+                  <a href="?page=1">&laquo First</a>
+                  <a href="?page={{lendingDeets.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                Page {{lendingDeets.number}} of {{lendingDeets.paginator.num_pages}}
+
+                {% if lendingDeets.has_next %}
+                  <a href="?page={{lendingDeets.next_page_number}}">Next</a>
+                  <a href="?page={{lendingDeets.paginator.num_pages}}">Last &raquo</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+{% endblock content %}
+

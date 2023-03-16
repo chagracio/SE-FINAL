@@ -1,0 +1,389 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HEADER -->
+<header>
+
+<!-- MAIN HEADER -->
+<div id="header">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- LOGO -->
+			<div class="col-md-3">
+				<div class="header-logo">
+					<a href="#" class="logo">
+						<img src="{% static 'images/a.jpeg' %}" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- /LOGO -->
+			<!-- SEARCH BAR -->
+			<div class="col-md-6">
+				<div class="header-search">
+					<form>
+						<input class="input" placeholder="Search here">
+						<button class="search-btn">Search</button>
+					</form>
+				</div>
+			</div>
+			<!-- /SEARCH BAR -->
+
+			<!-- ACCOUNT -->
+			<div class="col-md-3 clearfix">
+				<div class="header-ctn">
+
+					<!-- Cart -->
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+							<i class="fa fa-shopping-cart"></i>
+							<span>My Cart</span>
+						</a>
+						<div class="cart-dropdown">
+							<div class="cart-list">
+								{% for r in riceitems %}
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{r.rice.image.url}}" alt="">
+									</div>
+									<div class="product-body">
+										<h3 class="product-name"><a href="#">{{r.rice.name}}</a></h3>
+										<h4 class="product-price"><span class="qty">{{r.quantity}}x</span>₱{{r.rice.price}}</h4>
+									</div>
+									<button class="delete update-cart" data-product="{{r.rice.id}}" data-action="del"><i class="fa fa-close"></i></button>
+								</div>
+								{% endfor %}
+							</div>
+							<div class="cart-summary">
+								<small>{{order.get_cart_items}} Item(s) selected</small>
+								<h5>SUBTOTAL: ₱{{order.get_cart_total}}</h5>
+							</div>
+							<div class="cart-btns">
+								<a href="#">View Cart</a>
+								<a href="{% url 'checkout' %}">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /Cart -->
+					<!-- Account -->
+					<div>
+						<a href="{% url 'logout' %}">
+							<i class="fa fa-user-o"></i>
+							<span>Log Out</span>
+						</a>
+					</div>
+					<!-- /Account -->
+					<!-- Menu Toogle -->
+					<div class="menu-toggle">
+						<a href="#">
+							<i class="fa fa-bars"></i>
+							<span>Menu</span>
+						</a>
+					</div>
+					<!-- /Menu Toogle -->
+				</div>
+			</div>
+			<!-- /ACCOUNT -->
+		</div>
+		<!-- row -->
+	</div>
+	<!-- container -->
+</div>
+<!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->
+
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+
+			<div class="col-md-7">
+				<!-- Billing Details -->
+				<div class="billing-details">
+					<div class="section-title">
+						<h3 class="title">Payment Details</h3>
+					</div>
+					<form action="" id="form" method="POST">
+						<div id="user-info">
+							<div class="form-group">
+								<input class="input" type="text" name="name" placeholder="{{customer.name}}" value="{{customer.name}}" disabled>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="email" placeholder="{{customer.email}}" value="{{customer.email}}" disabled>						
+							</div>
+							<div class="form-group">
+								{% if customer.barangay.name == None %}
+									<input class="input" type="text" name="address" placeholder="Complete Address" disabled>
+								{% else %}
+									<input class="input" type="text" name="adress" placeholder="{{customer.street}}, {{customer.barangay.name}}" value="{{customer.street}}, {{customer.barangay.name}}" disabled>
+								{% endif %}
+														
+							</div>
+							<div class="form-group">
+								{% if customer.ContactNum == None %}
+									<input class="input" type="tel" name="tel" placeholder="Phone Number" disabled>
+								{% else %}
+									<input class="input" type="tel" name="tel" placeholder="{{customer.ContactNum}}" value="{{customer.ContactNum}}" disabled>
+								{% endif %}
+							</div>
+						</div>
+						<hr>
+					<div class="shipping-method">
+
+						{% if customer.method.method == None %}
+
+						{% else %}
+						<div><strong>Shipping Method</strong></div>	
+						<input class="input" type="text" name="shippingMeth" placeholder="{{customer.method.method}}" value="{{customer.method.method}}" disabled>
+						{% endif %}
+
+						<br><br>
+					<p>Click <span><u><strong><a href="/CustomerInfo/{{customer.id}}">here</a></strong></u></span> to update customer details.</p>
+				</div>
+					<!-- </form>											 -->
+					
+				</div>
+				<!-- /Billing Details -->
+				<hr>
+				<div class="shiping-details">
+					<div class="input-checkbox">
+						{% if customer.loan %}
+						<input type="checkbox" id="shiping-address" value = "{{customer.loan}}" checked disabled>
+						<label for="shiping-address">
+							<span></span>
+							
+							Applying for Rice Loan?
+						</label>
+						{% else %}
+						<input type="checkbox" id="shiping-address" value = "{{customer.loan}}" disabled>
+						<label for="shiping-address">
+							<span></span>
+							
+							Applying for Rice Loan?
+						</label>
+						{% endif %}
+					</div>
+				</div>
+
+				<!-- Order notes -->
+				<div class="order-notes">
+					<textarea class="input" placeholder="Order Notes"></textarea>
+				</div>
+				<!-- /Order notes -->
+			</div>
+
+			<!-- Order Details -->
+			<div class="col-md-5 order-details">
+				<div class="section-title text-center">
+					<h3 class="title">Your Order</h3>
+				</div>
+				<div class="order-summary">
+					<div class="order-col">
+						<div><strong>PRODUCT</strong></div>
+						<div style="text-align: right;">
+							{%  if customer.loan %}
+								<strong>LOAN PRICE</strong>
+							{% else %}
+								<strong>PRICE</strong>
+							{% endif %}
+						</div>
+						<div><strong>TOTAL</strong></div>
+					</div> 
+					<div class="order-products">
+						{% for r in riceitems %}
+						<div class="order-col">
+							<div class="quantity">{{r.quantity}}x <span class="ricename">{{r.rice.name}}</span></div>
+							
+							{% if customer.loan %}
+								<div style="text-align: right;">{{r.rice.loanPrice}}</div>
+									
+								{% else %}
+								<div style="text-align: right;">{{r.rice.price}}</div> 
+								{% endif %}
+
+							<div>₱{{r.get_total}}</div>
+						</div>
+						{% endfor %}	
+					</div>
+					<div class="order-col">
+						<div>Shipping</div>
+						<div><strong>{{order.shipping}}</strong></div>
+					</div>
+					<div class="order-col">
+						<div><strong>TOTAL</strong></div>
+						<div><strong class="order-total">₱{{order.get_order_total}}</strong></div>
+					</div>
+				</div>
+				
+				<a href="#" class="primary-btn order-submit" id="place-order">Place order</a>
+			</div>
+		</form>	
+
+			<!-- /Order Details --> 
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->	
+
+<!-- NEWSLETTER -->
+<div id="newsletter" class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="newsletter">
+					<p>Connect with <strong>C &amp 3G </strong></p>
+					<form>
+						<input class="input" type="text" placeholder="Enter Your Inquiry...">
+						<button class="newsletter-btn"><i class="fa fa-envelope"></i> Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /NEWSLETTER -->
+
+<!-- FOOTER -->
+<footer id="footer">
+	<!-- top footer -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-3 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-title">About Us</h3>
+						<p>C and 3G Rice and Corn Store is a wholesale and retail business owned by Mrs. Cherry P. Andalis</p>
+						<ul class="footer-links">
+							<li><i class="fa fa-map-marker"></i> Saavedra Homes Subdivision, Tugbungan, Zamboanga City</li>
+							<li><a href="https://web.facebook.com/cherry.padaongandalis"><i class="fa fa-facebook"></i>Cherry P. Andalis</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="clearfix visible-xs"></div>
+
+				<div class="col-md-3 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-title">Information</h3>
+						<ul class="footer-links">
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Reviews & Feedbacks</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Terms & Conditions</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /top footer -->
+
+	<!-- bottom footer -->
+	<div id="bottom-footer" class="section">
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<span class="copyright">
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</span>
+				</div>
+			</div>
+				<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /bottom footer -->
+</footer>
+<!-- /FOOTER -->
+
+<script>
+// 	document.getElementById('place-order').onclick = function(){
+//     var radios = document.getElementsByName('shippingMeth');
+//     for (var radio of radios)
+//     {
+//         if (radio.checked) {
+//             radio.value;
+//         }
+//     }
+// }
+
+
+	var total = '{{order.get_cart_total}}'
+
+	//var rice_ordered = '{{riceitems}}'
+	
+	// var quantity = document.getElementById('quantity').value
+	// var ricename= document.getElementById('ricename').value
+
+	var form = document.getElementById('form')
+
+	form.addEventListener('submit', function(e){
+		e.preventDefault()
+		console.log('Form Submitted...')
+	})
+
+
+	document.getElementById('place-order').addEventListener('click', function(e){
+		submitFormData()
+	})
+
+	function submitFormData(){
+		console.log('Place Order button clicked')
+
+		var userFormData = {
+			'name':null,
+			'email':null,
+			'tel':null,
+			'total':total,	
+			'shippingMeth':null,
+			'address':null,
+			//'rice_ordered':rice_ordered,
+		}
+
+		// userFormData.tel = form.tel.value
+		// userFormData.address = form.address.value
+		// userFormData.shippingMeth = form.shippingMeth.value
+
+		// userFormData.rice_ordered = form.rice_ordered.value
+		// userFormData.rice_ordered.push(form.rice_ordered.quantity, form.rice_ordered.rice.name)
+
+
+		var url = "/process_order/"
+		fetch(url, {
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json',
+				'X-CSRFToken': csrftoken,
+			},
+			body:JSON.stringify({'form': userFormData})
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log('Success:', data);
+			alert('Order Submitted');
+			window.location.href = "{% url 'Customer' %}"
+		})
+	}
+
+</script>
+{% endblock content %}

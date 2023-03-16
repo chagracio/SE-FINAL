@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div class="col-md-7">
+                <!-- Billing Details -->
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="title"> Customer Payment Details</h3>
+                    </div>
+
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input class="input" type="text" name="first-name" placeholder="{{customer.name}}" value="{{customer.name}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="email" placeholder="{{customer.email}}" value="{{customer.email}}" readonly>
+                        </div>
+                        <!-- {{customer_form.as_p}} -->
+
+                        <strong>Barangay: </strong><span>{{customer_form.barangay}}</span><br><br>
+                        <div class="form-group">
+                            {{customer_form.street}}
+                        </div>
+                        
+                        <div class="form-group">
+                            {{customer_form.ContactNum}}
+                        </div>
+
+                        <strong>Mode of delivery: </strong><span>{{customer_form.method}}</span>
+
+                        <br><br>
+                        <div class="shiping-details">
+							<div class="input-checkbox">
+								{{customer_form.loan}}
+								<label for="shiping-address">
+									<span></span>
+									Apply for Rice Loan?
+								</label>
+								<div class="caption">
+								<div class="form-group">
+										<p>Please submit any valid id.</p>{{customer_form.customer_id}}
+								</div>
+							</div>
+						</div>
+                        
+    
+                        <button type="submit" class="btn btn-primary" style="width: 100px;">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>            <!-- /Billing Details -->
+</div>
+
+<script>
+    function myFunction() {
+        const loan = document.getElementById('shiping-address');
+        const customer_id = document.getElementById('customer-id');
+
+        if (loan.checked == true){
+            customer_id.setAttribute('required', '');
+        }
+        else {
+            customer_id.removeAttribute('required');
+        }
+        
+    }
+</script>
+{% endblock content %}
